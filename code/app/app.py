@@ -13,23 +13,23 @@ def form():
 @app.route('/predict_price', methods=['POST', 'GET'])
 def predict_price():
     # get the parameters
-    bedrooms = float(request.form['bedrooms'])
-    bathrooms = float(request.form['bathrooms'])
-    sqft_living15 = float(request.form['sqft_living15'])
-    grade = float(request.form['grade'])
-    condition = float(request.form['condition'])
+    shot_power = float(request.form['shot_power'])
+    heading_accuracy = float(request.form['heading_accuracy'])
+    finishing = float(request.form['finishing'])
+    ball_control = float(request.form['ball_control'])
+    overall = float(request.form['overall'])
 
     # load the model and predict
     model = joblib.load('model/linear_regression.pkl')
-    prediction = model.predict([[bedrooms, bathrooms, sqft_living15, grade, condition]])
+    prediction = model.predict([[shot_power, heading_accuracy, finishing, ball_control, overall]])
     predicted_price = prediction.round(1)[0]
 
     return render_template('results.html',
-                           bedrooms=int(bedrooms),
-                           bathrooms=int(bathrooms),
-                           sqft_living15=int(sqft_living15),
-                           grade=int(grade),
-                           condition=int(condition),
+                           shot_power=int(shot_power),
+                           heading_accuracy=int(heading_accuracy),
+                           finishing=int(finishing),
+                           ball_control=int(ball_control),
+                           overall=int(overall),
                            predicted_price="{:,}".format(predicted_price)
                            )
 
